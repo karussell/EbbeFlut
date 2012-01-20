@@ -1,0 +1,216 @@
+%compile it with pdflatex
+
+\documentclass[12pt]{article}
+\usepackage[ansinew]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{ngerman}
+
+%damit man vom Inhaltsverzeichnis direkt zum jeweiligen Kapitel springen kann:
+\usepackage{hyperref}
+
+\setlength{\oddsidemargin}{1.4cm} %links
+\setlength{\evensidemargin}{0.1cm} %rechts
+
+\begin{document}
+
+%---------------------------Titelseite-----------------------------------------
+\title{ \bf \LARGE Ebbe und Flut 1.0.2}
+
+\author{Wolfgang Werner - Spielidee\\
+        Peter Karich - Programmierer\\ }
+\date{Bayreuth, den \today}
+\maketitle
+%------------------------------------------------------------------------------
+
+
+%------------------------------------INHALT-------------------------
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+%------------------------------------------------------------------------------
+\pagestyle{headings}
+
+\section{Einleitung}
+Die Spielidee ist von  Wolfgang Werner, der Ebbe und Flut als Kartenspiel im Adlung-Verlag für ca. 7 EUR herausgebracht hat. Unbedingt kaufen - spart Strom :-)\\
+Allerdings kann man dieses Spiel mehr schlecht als recht {\bf allein} spielen, so dass ich dieses Programm als Alleinspielersatz verstehen will. Außerdem kann man herausbekommen, ob derjenige der das Spiel beginnt oder sein Gegner im Durschnitt gewinnt, wenn beides 100\% tige (computer-) Spieler sind. Es zeichnet sich ab, dass derjenige der anfängt gewinnt.\\
+Ein gutes Training ist es bei dem Spiel Comuter gegen Computer zuzuschauen.
+\section{Installation}
+Ihr braucht eine Virtuelle Java Maschine, die ist meistens schon vorinstalliert
+egal welches Betriebsystem. Mindestens braucht ihr jedoch version 1.1.
+Es gibt sie kostenlos zum runter laden auf http://java.sun.com allerdings ist
+diese über 10 MB groß. Es gibt aber unzählige kleinere Variante im Netz, mit
+denen Ebbe und Flut auch gehen müsste. Z.B. www.kaffe.org.\\
+Es lebe OpenSource :-)
+\subsection{Linux}
+\label{linux}
+Alle Dateien in ein Verzeichnis kopieren, dann mit der Konsole in dieses
+wechseln und {\bf ./linuxStart.sh} eingeben.
+\subsection{Windows}
+Alle Dateien in ein Verzeichnis kopieren. Und dann einfach auf winStart(.bat) klicken.
+\subsection{Mac}
+Einfach auf EbbeFlut.class klicken oder wie bei \ref{linux} beschrieben.
+\subsection{Zaurus}
+\label{zaurus}
+Für den Zaurus muss man in der Datei dat/gameSettings.txt \ die Variable OS\_IS\_ZAURUS=YES setzen.\\
+Die Datei runebbeflut nach /home/QtPalmtop/bin kopieren.\\
+Die Datei ebbe.desktop nach /home/QtPalmtop/apps/Joede kopieren.\\
+Die Datei ebbeflut.png nach /home/QtPalmtop/pics kopieren.\\
+Das gesamte Verzeichnis ebbeflut/ in gewünschte Position kopieren und danach die Verzeichnisnamen in runebbeflut anpassen. Dies alles kann man auch mit dem Befehl {\bf ipkg install ebbeflut.ipkg} machen.
+\subsubsection{Details}
+Wie in \ref{programmer} erwähnt, sollte man alles mit javac -target 1.1 übersetzen.\\
+Wen man kopi benutzt kann man die Datei javac (,welche dann kjc indirekt ausführt) zur Kompilierung auf 
+dem Zaurus und überall sonst benutzen. Man muss nur seine jvm anpassen (z.B. jc, javac, evm).
+Wenn mir einer sagen kann woran es liegt, dass bei mir nach all den Anstrengungen die ich hinter mir 
+habe, noch immer kein Programm Icon auf der Zaurustaskleiste erscheint, wäre ich sehr dankbar!
+\section{Anleitung}
+\subsection{Übersicht des Zugablaufs}
+\subsubsection{Überprüfen}
+\label{ueberpruefen}
+Dieser Schritt ist nicht Pflicht.
+Falls der Gegner mögliche Züge übersehen hat, er also noch Karten {\bf "`ziehen"'}
+könnte, kann man auf den gegnerischen Zielstapel klicken und so wird diesem Stapel
+eine Karte abgezogen, falls dort überhaupt Karten vorhanden sind. Man sollte also
+immer darauf achten, dass man alle möglichen Karten {\bf "`gezogen"'} hat.
+{\bf Danach } muss der Gegner seine möglichen Karten noch ziehen.\\
+Falls der Gegner keine Zügen machen kann bzw. man selbst den aller ersten Zug macht,
+entfällt natürlich diese Vorgehensweise.
+\subsubsection{Karte aufdecken}
+Dieser Schritt ist Pflicht.
+Einmal auf seinen eigenen Startstapel klicken. Nun sollte man seine nächste Karte sehen,
+die man jetzt auch auf seine Startfelder {\bf "`platzieren"'} kann.\\
+Selten sind vorher auf dem Spielbrett Züge möglich, welche man {\bf vor} dem
+Platzieren ziehen darf. Dies könnte der Fall sein, wenn beim Ziehen des Gegners
+eigene Karte(n) freigeworden sind.\\
+Falls beim Anklicken keine Karte erscheint, hat man wahrscheinlich mögliche Züge
+vergessen (der Gegner hat Schritt \ref{ueberpruefen} angewandt) und man muss diese
+Züge nun alle noch ausführen, damit der Gegner dies nicht wiederholen kann.\\
+Falls keine Karte erscheint, könnte es ebensogut sein, dass keine Karten mehr vorhanden
+sind. Dies leitet das Ende des Spiels ein. Siehe Abschnitt \ref{ende}.
+\subsubsection{Aufgedeckte Karte platzieren}
+Dieser Schritt ist Pflicht.
+Man legt die aufgedeckte Karte auf eins seiner drei Startfelder: 44, 34 und 43 für
+Spieler 1. bzw. 00, 01 und 10 für Spieler 2.
+Im Programm klickt man auf den Startstapel und dann auf das jeweilige Feld.
+\subsubsection{Karten ziehen}
+Dieser Schritt ist nicht Pflicht. Am Besten Karten ziehen bis nix mehr möglich ist! Das {\bf Ziehen} für Spieler 1 geschieht folgendermaßen (für Spieler 2 alles um $180 \circ$ verdreht):\\
+Wenn in der Horizontalen des Spielbrettes der Wert {\bf oder} der Buchstabe von einer {\bf eigenen} Karte mit einer anderen {\bf eigenen} Karte übereinstimmt, dann kann man eine von beiden Karten nach {\bf oben} setzen.\\
+Wenn in der Vertikalen der Wert {\bf oder} der Buchstabe von einer {\bf eigenen} Karte mit einer anderen {\bf eigenen} Karte übereinstimmt, dann kann man eine von beiden Karten nach {\bf links} setzen. Wenn mindestens eins von beiden der Fall ist, so nenne ich dies hier: Beide Karten sind "`gleiche"' Karten. Das Ziehen einer Karte, macht man im Programm, indem man die Karte anklickt, die man versetzen will, welche daraufhin rot aufleuchtet und dann das Feld anklickt, auf das man diese Karte setzen will.
+\subsubsection{Seinen Zug beenden}
+Dieser Schritt ist Pflicht.
+Seinen Zug beenden sollte man erst, wenn man sich sicher ist, dass man schon alle
+möglichen Züge gemacht hat. Da der Gegner ja sonst Schritt \ref{ueberpruefen} anwenden
+könnte. Seinen Zug beendet man im Programm, indem man auf sein eigenes Startstapelfeld
+klickt. Jetzt ist der Gegner dran.
+\subsection{Wichtige Bemerkungen}
+\subsubsection{}
+Es kann auch vorkommen(selten), dass eine Karte außerhalb des Spielbretts (5x5) gesetzt
+werden könnte. Wenn man also zwei "`gleiche"' eigene Karten am Rand hat (der Obere oder
+Linke) und man ja nun eine von Beiden außerhalb des Spielbretts (5x5) setzen könnte. Im
+Program ist das einwenig kompliziert, da man das Feld auf das man seine Karte setzen
+will ja nicht sieht und man dieses deshalb nicht explizit anklicken könnte.
+Also: gehe auf "`Card"' im Menu und klicke da "`remove"' an. Jetzt erscheint:
+"`Click the card you want to move out of board!"'. Und man klickt Ok, danach
+klickt man auf die betreffende Karte.
+Es müßte eine Warnung erscheinen, falls dies nicht möglich ist.\\
+Dieses Vorgehen kann sinnvoll, da der Gegner ja sonst immer Schritt \ref{ueberpruefen} anwenden kann. Jedoch kann man meist eine solche Konstellation auch in weiser Vorraussicht verhindern!
+\subsubsection{}
+Beim Ziehen kann es auch vorkommen, dass eine eigene oder gegnerische Karte überdeckt wird. Generell darf man einen Stapel nehmen und schauen wieviel und welcher Art die Karten in diesem Stapel sind. Dies geschieht im Programm indem
+man auf "`Card"' im Menu und dort "`show Stack"' an. Jetzt erscheint: "`Click the stack you want to see!"'. Und man klickt Ok, danach klickt man auf den betreffenden Stapel. Jetzt sollte ein Fenster mit ein paar Kästchen erscheinen. Die Anzahl dieser gibt die aktuelle Anzahl der Karten im Stapel an. Die oberste Karte im Fenster ist auch die oberste Karte im Stapel. Darunter erscheinen noch Fragezeichen in der Farbe des Spielers, dem diese Karten auch
+gehören.
+\subsection{Spielende}
+\label{ende}
+Wenn bei beiden Spielern keine Züge mehr möglich sind und alle Karten von den beiden Startstapeln gezogen wurden, dann endet das Spiel.
+\subsection{Spielziel}
+Es gewinnt derjenige, der die meißten Karten im Ziel hat.
+Wenn man mit einer seiner Karten auf die eigenen Zielfelder (siehe \ref{overview})
+kommt, so kommt diese sofort auf den eigenen Zielstapel. Im Programm passiert
+dies automatisch.
+\subsection{Beispiel}
+Am Anfang hat jeder Spieler je 25 Karten auf seinem Startstapel:\\ A1, A2, A3,
+A4, A5, B1, ..., E5 bzw. a1, ..., e5\\ Diese sind gut gemischt und zunächst
+verdeckt. Siehe \ref{overview}\\
+Spieler 1 beginnt (immer).Und er ist der Untere Spieler.\\
+Er deckt sein erste Karte auf, indem er sein Startstapelfeld anklickt, das sind die
+Felder 44, 34 und 43. Er setzt nun die Karte z.B. B5 auf Feld 44. Dies macht Spieler 1,
+indem er zuerst sein Startstapelfeld und danach das Feld 44.
+Nun beendet Spieler 1 seinen Zug, indem er sein Startstapelfeld anklickt. Für Spieler 2
+beginnt der Zugablauf von Neuem. Er setzt z.B. a1 auf Feld 00.\\
+Spieler 1 ist nun wieder an der Reihe: er deckt z.B. E5 auf und kann diese Karte nun
+z.B. auf das Feld 43 ziehen. Danach kann er entweder diese Karte oder B5 ein Feld nach
+links ziehen.\\
+Er klickt z.B. Karte E5 auf 43 an, welche daraufhin rot aufleuchtet und dann auf Feld 33.\\
+{\bf Für ein anderes Beispiel siehe bildershow.zip.}
+\newpage
+\subsection{Spielplan Übersicht}
+Alle sichtbaren Felder sind im realen Leben Kartenstapel, es können sich also auf
+jedem Feld viele oder gar keine Karten befinden.
+Ich bezeichne die nummerierten Felder von 00 bis 44 als Spielbrett (5x5).\\
+Felder 44, 34 und 43 = Startfelder von Spieler 1 = Zielfelder von Spieler 2\\
+Felder 00, 10 und 01 = Startfelder von Spieler 2 = Zielfelder von Spieler 1\\
+Startstapel 1 bzw. 2 enthalten am Anfang je 25 Karten.\\
+Zielstapel 1 und 2 sind am Anfang noch leer.\\
+"`turn No.?"' zeigt an, welche Zugnummer gerade aktuell ist.
+\begin{figure}[ht]
+\includegraphics[scale=0.5]{overview.jpg}
+\label{overview}
+\caption{Startkonstellation}
+\end{figure}
+\section{Beschreibung der Dateien}
+*.java sind die Quelltextdateien.\\
+\ *.class sind die Binarycodedateien für die virtuelle java machine.\\%der anfang mit "\ " notwendig, warum??
+dat/gameSettings.txt enthält Konfigurationsparameter.\\
+\ \ Starte nach dem Parameterändern das Programm neu!\\
+\ \ z.B. TIMER\_TIME1=20 und man erhält einen sehr schlechten Gegner als Spieler eins\\
+\ \ z.B. PLAYBACK1=1 jeder Zug des ersten Spielers wird nur einmal wiederholt.\\
+\ \ z.B. OS\_IS\_ZAURUS=YES siehe\ref{zaurus}\\
+tmp/*errLog.txt enthalten die Ergebnisse der in tmp/*outLog.txt gespeicherten Spiele.\\
+dat/settingsPlayer1 und 2 enthalten alle Einstellungen die man auch über das Menu Settings machen kann.\\
+pics/ebbeflut.png ist ein 32x32 grosses 256 Farben Bild. Es stellt eine untergehende Sonne am Meer dar.\\
+doc/gpl.txt die General Public License auf Englisch.\\
+doc/ZuTun.txt verbleibende Verbesserungen.\\
+doc/ToDo.txt das Ganze auf Englisch.\\
+doc/ToDo.txt das Ganze auf Englisch.\\
+doc/liesmich.tex diese Datei hier.\\
+doc/readme.tex eine englische Version der Beschreibung.\\
+doc/overview.jpg eine Spielplanübersicht, diese ist für die Dateien *.tex notwendig.\\
+Man erhält auf der Seite ... noch folgende Dateien:\\
+bildershow.zip eine Bildfolge mit Beschreibung eines Spielausschnitts.\\
+Und die *.tex Dateien als *.pdf.
+\section{Hinweise für Programmierer}
+\label{programmer}
+Falls man den Sun Compiler benutzt, sollte man alles mit javac -target 1.1 übersetzen, damit die 
+Kompatibilität zur evm des Zaurus gewährleistet ist. Weitere Hinweise zur Installation siehe \ref{zaurus}\\
+Erstens: Objektorientierung ist oberstes Gebot! {\bf Danach} kommt die Geschwindigkeit des Programms!
+Außerdem habe ich bei Board bzw. GraphicBoard versucht möglichst das virtuelle Brett von seiner 
+grafischen Realisierung zu trennen, teilweise scheint dies auch gelungen zu sein :-)\\
+Bitte darauf achten, dass man soviel wie möglich selbst erklärende Variablen etc. benutzt, wenn nicht dann
+unbedingt kommentieren!
+Tipp:  Am Besten zu zweit am Rechner programmieren, bzw. erst die Idee als Code (vorher im Kopf bzw.
+Blatt Papier) und erst dann kompilieren.
+\section{Outro}
+Viel Spaß, auch beim zusehen wie Computer gegen Computer spielen! Bugs bitte
+eMailen an: {\bf sourcemaker2000-berlios@yahoo.de}. Oder unter\\ {\bf
+http:/developer.berlios.de/ebbeflut} reporten, falls bug reporten schon möglich
+sein sollte.
+\section{Lizenz}
+Copyleft Peter Karich 2004. Dieses Programm steht unter der GPL(general public license)! 
+Dies heißt soviel wie (=meine Interpretation):\\
+Ihr könnt diese Software kopieren und verteilen wie {\bf ihr} wollt. Ihr könnt sogar
+Geld dafür verlangen, meist für den zusätzlichen Service, oder Hardwarekosten.\\
+{\bf Aber} ihr seid verpflichtet {\bf immer} den Quellcode dem Programmdateien
+beizufügen bzw. zu benennen, wo dieser {\bf kostenlos} downzuloaden ist. {\bf Auch}
+Veränderungen bzw. Verbesserungen vorzunehmen sind gut, {\bf Aber} ihr müsst immer
+notieren wer was veränerdt hat und was ihr verändert habt!! Ihr dürft aber nicht den
+Copyrightvermerk und diesen Vermerk über die GPL verändern bzw. die gpl.txt
+entfernen. Bitte lest euch aber auch die Originale durch, wenn ihrs genauer wissen
+wollt. Die gibt es inzwischen auch in deutsch.\\
+{\bf Außerdem} kann ich {\bf Keine Garantie} für die Funktionalität geben und schon gar
+nicht dafür, dass alles Heile bleibt mit eurem Rechner (Es wäre aber fast unmöglich
+wenn dieses Program irgendwelche Hardwareschäden hinterlässt! Dennoch {\bf No Warranty}!!
+Und:\\
+ "`If the software is modified by someone else and passed on, we want its
+recipients to know that what they have is not the original, so that any problems
+introduced by others will not reflect on the original authors' reputations."')
+Schaut euch am Besten www.gnu.org an bzw. gpl.txt!
+\end{document}

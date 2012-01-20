@@ -1,0 +1,1 @@
+evm -cp ../kjc.jar at.dms.kjc.Main -C ../kjc_java_libs/gclasses/:. $1

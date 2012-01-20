@@ -1,0 +1,16 @@
+;use ";" to comment sth. out
+;ONLY ONE init per line!
+
+CHANGE_STANDARD_STREAMS=yes;
+OS_IS_ZAURUS=yes;
+
+;debug section
+DEBUG=YES; DEBUGGING??, if no than all following values will set to its standard values -> see Cons.java
+NC=25;  CHEAT it with e.g.15 moves
+PLAYBACK1=0;  CHEAT it with canceling the slow PlayBack modus
+PLAYBACK2=2; for player 1 or player 2;
+RANDOM=-1;  if you init the constructor with a value >=0(e.g. 60), than you can "play god"
+TIMER_TIME1=70000;  
+TIMER_TIME2=70000;
+EXIT_NUMBER=99999;  Exit after EXI_NUMBER games
+VISUALISATION=yes; //no frame will call, no questions will ask, repeat until EXIT_NUMBER is reached

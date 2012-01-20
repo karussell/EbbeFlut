@@ -1,0 +1,35 @@
+
+folgende Verbesserungen sind noetig/moeglich:
+-loesche ebbeflut.exe4j aus reposit in berlios
+-adde einige andere Dateien z.B. *.tex
+-Zugverkuerzung fuer Ai??
+-thinking vom computer anzeigen
+-ebbe als server, bzw netzfaehig machen, eventuell chat fenster?
+-loesche nicht mehr verwendete variablen, imports etc.
+-Board nicht nach jedem Zug fuer Ai clonen, besser nur die Zuege vom Gegner
+ darauf ausfuehren lassen => clonen dauert aber nur wenige milli sekunden
+ daher wuerde der Aufwand ganz schoen gross sein
+-andere Bugs??
+
+
+schon ausprobierte (nutzlose) verbesserungen:
+---------------------------------------------
+in Move getAllPossible ist nur nach dem ersten Zug noetig -> dann kann man 
+ schnellere Methode schreiben -> Move.getNewPossible
+ dies ist jedoch nicht nachweislich schneller!
+
+in Field
+  try catch(EmptyStackException statt if(stack.empty 
+  dies ist aber langsamer da das Field meist leer ist
+
+in Move.getAllPossible
+  move.toX=m; move.toY=n-1; is the same as: 
+  move=new Move(tmp, player, m,  n-1);          //but you have to "new Move" it !!
+in AI
+  for(int i=0; i < all.size() && timer.isActive(); i++)
+  without timer.isActive is not (really)faster
+--------------------------------------------------------------------------------
+
+<p> for new line in comments instead of ;
+
+my Stack class with changes @see |CHANGE|
