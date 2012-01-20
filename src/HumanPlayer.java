@@ -13,6 +13,8 @@
  */
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /** for humanplayer 
  * @see Chronos for chronical-order-implementation
@@ -30,7 +32,13 @@ public class HumanPlayer extends Player
     public Path moves()
     {  EbbeFlut.chronical.newTurn(EbbeFlut.chronical.fromBeginning());
      
-     while(!EbbeFlut.chronical.isTurnFinished() && (!EbbeFlut.chronical.isGameFinished() || EbbeFlut.chronical.lastMoves()) );          
+     while(!EbbeFlut.chronical.isTurnFinished() && (!EbbeFlut.chronical.isGameFinished() || EbbeFlut.chronical.lastMoves()) ) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+     }         
 
        return path;
     }

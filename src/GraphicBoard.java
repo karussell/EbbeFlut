@@ -213,7 +213,7 @@ public class GraphicBoard extends Board implements ActionListener
   
   static public void setGraphics(Button b,Color c,String str)
   { b.setFont(new Font("Dialog",Font.BOLD,22));
-    b.setForeground(c);
+    b.setForeground(c);    
     b.setLabel(str);
   }
   
