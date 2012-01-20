@@ -1,2 +1,0 @@
-cd /mnt/card/ebbeflut/
-evm -XappName=ebbeflut EbbeFlut > dat/log.txt

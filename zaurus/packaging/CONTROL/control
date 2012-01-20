@@ -1,0 +1,7 @@
+Package: ebbeflut
+Priority: optional
+Section: Games
+Version: 0.1
+Architecture: arm
+Maintainer: Peter Karich 
+Description: A nice board game

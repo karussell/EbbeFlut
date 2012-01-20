@@ -1,7 +1,10 @@
+nbproject/private/
 tmp/
 build/
+dist/
 *.aux
 *.log
 *.toc
 *.out
 *~
+zaurus/packaging/home/QtPalmtop/java/ebbeflut/

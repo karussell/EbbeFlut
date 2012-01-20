@@ -1,0 +1,3 @@
+cd /opt/QtPalmtop/java/ebbeflut/
+evm -cp . -XappName=ebbeflut EbbeFlut 
+#> dat/log.txt
